@@ -1,0 +1,158 @@
+--select *
+--from games
+
+--select *
+--from games
+--where Genres is null
+
+--Changing "k" in 6 columns to thousand
+
+--alter table games
+--add thousand int
+
+--select thousand, coalesce(thousand, '1000') as Thousand
+--from games 
+--where thousand is null
+
+--update games
+--set thousand = coalesce(thousand, '1000')
+
+
+--select (cast(replace(wishlist, 'k', '') as float)*thousand)
+--from games
+--where Wishlist like '%k'
+
+--update games
+--set Wishlist = (cast(replace(wishlist, 'k', '') as float)*thousand)
+--from games
+--where Wishlist like '%k'
+
+--select (cast(replace([Times Listed], 'k', '') as float)*thousand)
+--from games
+--where [Times Listed] like '%k'
+
+--update games
+--set [Times Listed] = (cast(replace([Times Listed], 'k', '') as float)*thousand)
+--from games
+--where [Times Listed] like '%k'
+
+
+--select (cast(replace([Number of reviews], 'k', '') as float)*thousand)
+--from games
+--where [Number of reviews] like '%k'
+
+--update games
+--set [Number of Reviews]=(cast(replace([Number of reviews], 'k', '') as float)*thousand)
+--from games
+--where [Number of reviews] like '%k'
+
+
+--select (cast(replace(plays, 'k', '') as float)*thousand)
+--from games
+--where Plays like '%k'
+
+--update games
+--set Plays = (cast(replace(plays, 'k', '') as float)*thousand)
+--from games
+--where Plays like '%k'
+
+
+--select (cast(replace(Playing, 'k', '') as float)*thousand)
+--from games
+--where Playing like '%k'
+
+--update games
+--set Playing = (cast(replace(Playing, 'k', '') as float)*thousand)
+--from games
+--where Playing like '%k'
+
+
+--select (cast(replace(Backlogs, 'k', '') as float)*thousand)
+--from games
+--where Backlogs like '%k'
+
+--update games
+--set Backlogs = (cast(replace(Backlogs, 'k', '') as float)*thousand)
+--from games
+--where Backlogs like '%k'
+
+--select *
+--from games
+--order by F1
+
+--alter table games
+--drop column thousand
+
+--dropping the summary and review columns
+
+--alter table games
+--drop column summary
+
+--alter table games
+--drop column reviews
+
+---- SHOWING THE MOST PLAYED GAMES
+--select max(CAST(plays as float)) AS PLAYS, Title, [Release Date]
+--from games
+--group by Title, [Release Date]
+--order by 1 desc
+
+---- SHOWING THE MOST LISTED GAMES
+--select max(CAST([Times Listed] as float)) AS TIMES_LISTED, Title, [Release Date]
+--from games
+--group by Title, [Release Date]
+--order by 1 desc
+
+----SHOWING THE GAMES WITH THE HIGHEST RATINGS
+--select max(Rating) AS RATING, Title, [Release Date]
+--from games
+--group by Title, [Release Date]
+--order by 1 desc
+
+----SHOWING THE GAMES CURRENTLY WITH THE MOST PLAYERS
+--select max(CAST(Playing as float)) AS PLAYING, Title, [Release Date]
+--from games
+--group by Title, [Release Date]
+--order by 1 desc
+
+----SHOWING THE GAMES ON THE MOST BACKLOGS
+--select max(CAST(Backlogs as float)) AS BACKLOGS, Title, [Release Date]
+--from games
+--group by Title, [Release Date]
+--order by 1 desc
+
+----SHOWING THE GAMES ON THE MOST WISHLISTS
+--select max(CAST(Wishlist as float)) AS WISHLIST, Title, [Release Date]
+--from games
+--group by Title, [Release Date]
+--order by 1 desc
+
+-- SHOWING ALL DISTINCT GENRES
+--select distinct(parsename(replace(replace(genres, ' ', ''), ',','.'),1)) as Genres
+--from games
+
+--CHANGING THE DATE COLUMN TO DATE ONLY
+
+--select convert(date, [Release Date])
+--from games
+
+--alter table games
+--add release_date date
+
+--update games
+--set release_date = convert(date, [Release Date])
+--from games
+
+--alter table games
+--drop column [release date]
+
+--DELETING DUPLICATE ROWS
+--delete sub
+--from
+--(select *, ROW_NUMBER() over (partition by (release_date) order by (release_date)) as row_number
+--from games
+--where release_date is not null) sub
+--where row_number > 1
+
+--select *
+--from games
